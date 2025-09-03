@@ -1,0 +1,43 @@
+﻿@model List<Kisi>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @if (Model.Count == 0)
+    {
+        <div class ="alert alert-info d-flex" role="alert" style="flex-direction:column">
+            Rehberde kayıtlı kişi bulunmamaktadır. "Yeni Kayıt" sayfasından kişi ekleyebilirsiniz.
+        </div>        
+    }
+    else
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Adı</th>
+                    <th>Soyadı</th>
+                    <th>Cep Telefonu</th>
+                    <th>İş Telefonu</th>
+                    <th>Detaylar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kisi in Model)
+                {
+                    <tr>
+                        <td>@kisi.Adi</td>
+                        <td>@kisi.Soyadi</td>
+                        <td>@kisi.CepTel</td>
+                        <td>@kisi.IsTel</td>
+                        <td>@kisi.Adres1</td>
+                        <td>@kisi.Adres2</td>
+                        <td>
+                            <a class="btn btn-primary" asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id">Detaylar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

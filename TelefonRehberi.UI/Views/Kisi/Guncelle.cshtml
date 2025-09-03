@@ -1,0 +1,54 @@
+﻿@model Kisi
+
+<div class="d-flex justify-content-center" style="width: 80%;">
+    <div class="d-flex flex-column" style="width: 70%;">
+        <!-- Başlık satırı -->
+        <div class="mb-3">
+            <h2>@Model.Adi @Model.Soyadi Güncelle</h2>
+        </div>
+
+        <form asp-controller="Kisi" asp-action="Guncelle" method="post" class="d-flex flex-row justify-content-center">
+            <div class="d-flex flex-row" style="width: 100%;">
+                <div class="d-flex flex-column" style="width: 100%;">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column" style="width:48%">
+                            <label for="Adi">Adı</label>
+                            <input type="text" class="form-control" id="Adi" name="Adi" asp-for="Adi" required />
+                        </div>
+                        <div class="d-flex flex-column" style="width:48%">
+                            <label for="Soyadi">Soyadı</label>
+                            <input type="text" class="form-control" id="Soyadi" name="Soyadi" asp-for="Soyadi" required />
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column" style="width:48%">
+                            <label for="CepTel">Cep Telefonu</label>
+                            <input type="text" class="form-control" id="CepTel" name="CepTel" asp-for="CepTel" />
+                        </div>
+                        <div class="d-flex flex-column" style="width:48%">
+                            <label for="IsTel">İş Telefonu</label>
+                            <input type="text" class="form-control" id="IsTel" name="IsTel" asp-for="IsTel" />
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column" style="width: 100%;">
+                        <label for="Adres1">Adres 1</label>
+                        <input type="text" class="form-control" id="Adres1" name="Adres1" asp-for="Adres1" required />
+                    </div>
+                    <div class="d-flex flex-column" style="width: 100%;">
+                        <label for="Adres2">Adres 2</label>
+                        <input type="text" class="form-control" id="Adres2" name="Adres2" asp-for="Adres2" required />
+                    </div>
+                    <div class="d-flex flex-row justify-content-end">
+                        <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@{
+}

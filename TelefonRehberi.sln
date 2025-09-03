@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelefonRehberi.UI", "TelefonRehberi.UI\TelefonRehberi.UI.csproj", "{A32BC4A4-78E7-4D51-8E37-839045D369ED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DABFCA76-6ED7-442E-80BA-336FF8888932} = {DABFCA76-6ED7-442E-80BA-336FF8888932}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelefonRehberi.API", "TelefonRehberi.API\TelefonRehberi.API.csproj", "{DB5E68C5-49F1-41F3-9155-30063FE97834}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelefonRehberi.Shared", "TelefonRehberi.Shared\TelefonRehberi.Shared.csproj", "{DABFCA76-6ED7-442E-80BA-336FF8888932}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DS", "DS", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DokuzSistemBase.Core.Helper", "..\..\GitProjeler\DokuzSistemBase\DokuzSistemBase.Core.Helper\DokuzSistemBase.Core.Helper.csproj", "{0273432F-7410-2227-C64A-D0801787EF21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DokuzSistemBase.Data.Dorm", "..\..\GitProjeler\DokuzSistemBase\DokuzSistemBase.Data.Dorm\DokuzSistemBase.Data.Dorm.csproj", "{D3FCD4CF-E087-8979-B843-B1701784BEDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DokuzSistemBase.Data.Dorm.Infrastructure", "..\..\GitProjeler\DokuzSistemBase\DokuzSistemBase.Data.Dorm.Infrastructure\DokuzSistemBase.Data.Dorm.Infrastructure.csproj", "{2196F556-36B5-6093-0844-C28EC255AD97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DokuzSistemBase.Data.Dorm.OutputDatas", "..\..\GitProjeler\DokuzSistemBase\DokuzSistemBase.Data.Dorm.OutputDatas\DokuzSistemBase.Data.Dorm.OutputDatas.csproj", "{57F9FCF8-BC6E-7FD0-BF9D-1696DBA3ADA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DokuzSistemBase.Data.Infrastructure", "..\..\GitProjeler\DokuzSistemBase\DokuzSistemBase.Data.Infrastructure\DokuzSistemBase.Data.Infrastructure.csproj", "{A3218980-10AC-FC2E-00B1-252A4820F769}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A32BC4A4-78E7-4D51-8E37-839045D369ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32BC4A4-78E7-4D51-8E37-839045D369ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32BC4A4-78E7-4D51-8E37-839045D369ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32BC4A4-78E7-4D51-8E37-839045D369ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB5E68C5-49F1-41F3-9155-30063FE97834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB5E68C5-49F1-41F3-9155-30063FE97834}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB5E68C5-49F1-41F3-9155-30063FE97834}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB5E68C5-49F1-41F3-9155-30063FE97834}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DABFCA76-6ED7-442E-80BA-336FF8888932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DABFCA76-6ED7-442E-80BA-336FF8888932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DABFCA76-6ED7-442E-80BA-336FF8888932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DABFCA76-6ED7-442E-80BA-336FF8888932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0273432F-7410-2227-C64A-D0801787EF21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0273432F-7410-2227-C64A-D0801787EF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0273432F-7410-2227-C64A-D0801787EF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0273432F-7410-2227-C64A-D0801787EF21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3FCD4CF-E087-8979-B843-B1701784BEDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3FCD4CF-E087-8979-B843-B1701784BEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3FCD4CF-E087-8979-B843-B1701784BEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3FCD4CF-E087-8979-B843-B1701784BEDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2196F556-36B5-6093-0844-C28EC255AD97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2196F556-36B5-6093-0844-C28EC255AD97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2196F556-36B5-6093-0844-C28EC255AD97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2196F556-36B5-6093-0844-C28EC255AD97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57F9FCF8-BC6E-7FD0-BF9D-1696DBA3ADA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57F9FCF8-BC6E-7FD0-BF9D-1696DBA3ADA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57F9FCF8-BC6E-7FD0-BF9D-1696DBA3ADA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57F9FCF8-BC6E-7FD0-BF9D-1696DBA3ADA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3218980-10AC-FC2E-00B1-252A4820F769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3218980-10AC-FC2E-00B1-252A4820F769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3218980-10AC-FC2E-00B1-252A4820F769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3218980-10AC-FC2E-00B1-252A4820F769}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0273432F-7410-2227-C64A-D0801787EF21} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D3FCD4CF-E087-8979-B843-B1701784BEDF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2196F556-36B5-6093-0844-C28EC255AD97} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{57F9FCF8-BC6E-7FD0-BF9D-1696DBA3ADA2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A3218980-10AC-FC2E-00B1-252A4820F769} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BBAFE58-496D-4E68-A616-FBE3B2EDAA3D}
+	EndGlobalSection
+EndGlobal

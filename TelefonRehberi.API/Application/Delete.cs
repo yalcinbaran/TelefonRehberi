@@ -1,0 +1,67 @@
+﻿using DokuzSistemBase.Core.Helper;
+using DokuzSistemBase.Data.Dorm;
+using System.Data.SqlClient;
+using System.Data;
+using TelefonRehberi.Shared;
+
+namespace TelefonRehberi.API.Application
+{
+    public class Delete
+    {
+        readonly IDbConnection conn;
+
+        public Delete()
+        {
+            conn = new SqlConnection(DokuzJsonManager.GetAppSetting().GetConnectionString("DefaultConnection"));
+        }
+
+        public bool KisiSil(Kisi kisi)
+        {
+                    var silinenKisi = conn.Delete(kisi, TableName: "Kisiler");
+                    if (silinenKisi != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+        }
+
+        public bool KisiTopluSil(List<long> kisiIdler)
+        {
+            List<Kisi> tumkisiler = new();
+            foreach (var id in kisiIdler)
+            {
+                var kisi = conn.QueryToFirstOrDefault<Kisi>("Select * from Kisiler Where Id = @Id", new { Id = id });
+                if (kisi != null)
+                {
+                    tumkisiler.Add(kisi);
+                }
+            }
+            var trn = conn.BeginTransaction();
+            using (trn)
+            {
+                try
+                {
+                    var silinenKisiler = conn.Delete(tumkisiler, transaction: trn, TableName: "Kisiler");
+                    if (silinenKisiler.Count > 0)
+                    {
+                        trn.Commit();
+                        return true;
+                    }
+                    else
+                    {
+                        trn.Rollback();
+                        return false;
+                    }
+                }
+                catch
+                {
+                    trn.Rollback();
+                    return false;
+                }
+            }
+        }
+    }
+}
