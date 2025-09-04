@@ -27,6 +27,5 @@ namespace TelefonRehberi.API.Application
                 return 0;
             }
         }
-
     }
 }

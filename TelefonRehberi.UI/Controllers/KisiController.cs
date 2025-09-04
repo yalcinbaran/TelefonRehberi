@@ -27,8 +27,8 @@ namespace TelefonRehberi.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Ekle(Kisi kisi)
         {
-            long kisiId = await _apiService.KisiEkleAsync(kisi);
-            return RedirectToAction("Index", new { kisiId });
+            long Id = await _apiService.KisiEkleAsync(kisi);
+            return RedirectToAction("Index", new { Id });
         }
 
         [HttpGet]
