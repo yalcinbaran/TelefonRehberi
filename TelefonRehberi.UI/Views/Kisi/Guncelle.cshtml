@@ -1,10 +1,10 @@
 ﻿@model Kisi
 
-<div class="d-flex justify-content-center" style="width: 80%;">
-    <div class="d-flex flex-column" style="width: 70%;">
+<div class="d-flex justify-content-center mx-auto" style="width: 80%;">
+    <div class="d-flex flex-column" style="width: 100%;">
         <!-- Başlık satırı -->
         <div class="mb-3">
-            <h2>@Model.Adi @Model.Soyadi Güncelle</h2>
+            <h3>@Model.Adi @Model.Soyadi Güncelle</h3>
         </div>
 
         <form asp-controller="Kisi" asp-action="Guncelle" method="post" class="d-flex flex-row justify-content-center">
@@ -40,9 +40,9 @@
                         <input type="text" class="form-control" id="Adres2" name="Adres2" asp-for="Adres2" required />
                     </div>
                     <div class="d-flex flex-row justify-content-end">
-                        <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
-                        <a asp-controller="Kisi" asp-action="Sil" asp-route-Id="@Model.Id" class="btn btn-danger mt-3 mx-1">Sil</a>
-                        <a asp-controller="Kisi" asp-action="Index" asp-route-Id="@Model.Id" class="btn btn-secondary mt-3">İptal</a>
+                        <button type="submit" class="btn btn-primary mt-3" style="width:10%">Kaydet</button>
+                        <a asp-controller="Kisi" asp-action="Sil" asp-route-Id="@Model.Id" class="btn btn-danger mt-3 mx-1" style="width:10%">Sil</a>
+                        <a asp-controller="Kisi" asp-action="Index" asp-route-Id="@Model.Id" class="btn btn-secondary mt-3" style="width:10%">İptal</a>
                     </div>
                 </div>
             </div>

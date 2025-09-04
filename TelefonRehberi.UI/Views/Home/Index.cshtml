@@ -12,7 +12,8 @@
     }
     else
     {
-        <div class="d-flex justify-content-end mb-5">
+        <div class="d-flex justify-content-between mb-5">
+            <h3>Tüm Kayıtlar</h3>
             <div style="display: flex; align-items: center; width: 250px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
                 <form id="aramaForm" method="post" action="/Home/Index" style="display: flex; align-items: center; width: 300px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
                     <input type="search" name="keyword" id="aramaInput" value="@ViewBag.AramaKelimesi" placeholder="Ara..." style="flex: 1; border: none; outline: none;" />
@@ -23,7 +24,7 @@
 
             </div>
         </div>
-        <table>
+        <table style="width: 100%">
             <thead>
                 <tr>
                     <th>Adı</th>
@@ -38,12 +39,12 @@
                 @foreach (var kisi in Model)
                 {
                     <tr>
-                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:15%; margin-left: 5px;">@kisi.Adi</a></td>
-                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:15%; margin-left: 5px;">@kisi.Soyadi</a></td>
-                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:10%; margin-left: 5px;">@kisi.CepTel</a></td>
-                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:10%; margin-left: 5px;">@kisi.IsTel</a></td>
-                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:25%; margin-left: 5px;">@kisi.Adres1</a></td>
-                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:25%; margin-left: 5px;">@kisi.Adres2</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:15%; min-width:15%;margin-left: 5px;">@kisi.Adi</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:15%; min-width:15%; margin-left: 5px;">@kisi.Soyadi</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:10%;  min-width:10%;margin-left: 5px;">@kisi.CepTel</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:10%; min-width:10%; margin-left: 5px;">@kisi.IsTel</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:25%; min-width:25%; margin-left: 5px;">@kisi.Adres1</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:25%; min-width:25%; margin-left: 5px;">@kisi.Adres2</a></td>
                     </tr>
                 }
             </tbody>
