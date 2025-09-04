@@ -22,6 +22,27 @@ namespace TelefonRehberi.UI.Controllers
             return View(kisiler);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(string? keyword = null)
+        {
+            var tumKisiler = await _apiService.GetTumKisilerAsync();
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                return View(tumKisiler);
+            }
+            ViewBag.AramaKelimesi = keyword;
+            keyword = keyword.ToLower();
+            var filteredKisiler = tumKisiler.Where(k =>
+                (!string.IsNullOrEmpty(k.Adi) && k.Adi.ToLower().Replace(" ", "").Contains(keyword)) ||
+                (!string.IsNullOrEmpty(k.Soyadi) && k.Soyadi.ToLower().Replace(" ", "").Contains(keyword)) ||
+                (!string.IsNullOrEmpty(k.CepTel) && k.CepTel.ToLower().Replace(" ", "").Contains(keyword)) ||
+                (!string.IsNullOrEmpty(k.IsTel) && k.IsTel.ToLower().Replace(" ", "").Contains(keyword)) ||
+                (!string.IsNullOrEmpty(k.Adres1) && k.Adres1.ToLower().Contains(keyword)) ||
+                (!string.IsNullOrEmpty(k.Adres2) && k.Adres2.ToLower().Contains(keyword))
+            ).ToList();
+            return View(filteredKisiler);
+        }
+
         public IActionResult Privacy()
         {
             return View();

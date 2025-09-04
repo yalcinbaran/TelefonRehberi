@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DokuzSistemBase-master\DokuzSistemBase-master\DokuzSistemBase.Core.Helper\DokuzSistemBase.Core.Helper.csproj" />
-    <ProjectReference Include="..\..\..\DokuzSistemBase-master\DokuzSistemBase-master\DokuzSistemBase.Data.Dorm.Infrastructure\DokuzSistemBase.Data.Dorm.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\DokuzSistemBase-master\DokuzSistemBase-master\DokuzSistemBase.Data.Dorm.OutputDatas\DokuzSistemBase.Data.Dorm.OutputDatas.csproj" />
-    <ProjectReference Include="..\..\..\DokuzSistemBase-master\DokuzSistemBase-master\DokuzSistemBase.Data.Dorm\DokuzSistemBase.Data.Dorm.csproj" />
-    <ProjectReference Include="..\..\..\DokuzSistemBase-master\DokuzSistemBase-master\DokuzSistemBase.Data.Infrastructure\DokuzSistemBase.Data.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Core.Helper\DokuzSistemBase.Core.Helper.csproj" />
+    <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Dorm.Infrastructure\DokuzSistemBase.Data.Dorm.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Dorm.OutputDatas\DokuzSistemBase.Data.Dorm.OutputDatas.csproj" />
+    <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Dorm\DokuzSistemBase.Data.Dorm.csproj" />
+    <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Infrastructure\DokuzSistemBase.Data.Infrastructure.csproj" />
     <ProjectReference Include="..\TelefonRehberi.Shared\TelefonRehberi.Shared.csproj" />
   </ItemGroup>
 

@@ -34,5 +34,20 @@ namespace TelefonRehberi.UI
             var id = await response.Content.ReadFromJsonAsync<long>();
             return id;
         }
+
+        public async Task<long> KisiGuncelleAsync(Kisi kisi)
+        {
+            var response = await _httpClient.PutAsJsonAsync("api/Update/KisiGuncelle", kisi);
+            response.EnsureSuccessStatusCode();
+            var id = await response.Content.ReadFromJsonAsync<long>();
+            return id;
+        }
+
+        public async Task<bool> SilAsync(long id)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Delete/KisiSil/{id}");
+            response.EnsureSuccessStatusCode();
+            return response.IsSuccessStatusCode;
+        }
     }
 }

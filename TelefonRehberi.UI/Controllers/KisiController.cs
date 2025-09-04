@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using TelefonRehberi.Shared;
 
 namespace TelefonRehberi.UI.Controllers
@@ -27,6 +26,11 @@ namespace TelefonRehberi.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Ekle(Kisi kisi)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(kisi); // Hataları göster
+            }
+
             long Id = await _apiService.KisiEkleAsync(kisi);
             return RedirectToAction("Index", new { Id });
         }
@@ -37,5 +41,26 @@ namespace TelefonRehberi.UI.Controllers
             var kisi = await _apiService.GetKisiByIdAsync(Id);
             return View(kisi);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Guncelle(Kisi kisi)
+        {
+            long Id = await _apiService.KisiGuncelleAsync(kisi);
+            return RedirectToAction("Index", new { Id });
+        }
+
+        public async Task<IActionResult> Sil(long Id)
+        {
+            bool sonuc = await _apiService.SilAsync(Id);
+            if (sonuc)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Index", new { Id });
+            }
+        }
+
     }
 }

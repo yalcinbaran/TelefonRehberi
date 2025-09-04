@@ -6,13 +6,23 @@
 <div class="text-center  mx-auto">
     @if (Model.Count == 0)
     {
-        <div class ="alert alert-info d-flex" role="alert" style="flex-direction:column">
+        <div class="alert alert-info d-flex" role="alert" style="flex-direction:column">
             Rehberde kayıtlı kişi bulunmamaktadır. "Yeni Kayıt" sayfasından kişi ekleyebilirsiniz.
-        </div>        
+        </div>
     }
     else
     {
-        
+        <div class="d-flex justify-content-end mb-5">
+            <div style="display: flex; align-items: center; width: 250px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
+                <form id="aramaForm" method="post" action="/Home/Index" style="display: flex; align-items: center; width: 300px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
+                    <input type="search" name="keyword" id="aramaInput" value="@ViewBag.AramaKelimesi" placeholder="Ara..." style="flex: 1; border: none; outline: none;" />
+                    <span style="margin-left: 8px; cursor: pointer;" onclick="document.getElementById('aramaForm').submit();">🔍</span>
+                </form>
+
+
+
+            </div>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -20,25 +30,40 @@
                     <th>Soyadı</th>
                     <th>Cep Telefonu</th>
                     <th>İş Telefonu</th>
-                    <th>Detaylar</th>
+                    <th>Adres 1</th>
+                    <th>Adres 2</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var kisi in Model)
                 {
                     <tr>
-                        <td>@kisi.Adi</td>
-                        <td>@kisi.Soyadi</td>
-                        <td>@kisi.CepTel</td>
-                        <td>@kisi.IsTel</td>
-                        <td>@kisi.Adres1</td>
-                        <td>@kisi.Adres2</td>
-                        <td>
-                            <a class="btn btn-primary" asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id">Detaylar</a>
-                        </td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:15%; margin-left: 5px;">@kisi.Adi</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:15%; margin-left: 5px;">@kisi.Soyadi</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:10%; margin-left: 5px;">@kisi.CepTel</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:10%; margin-left: 5px;">@kisi.IsTel</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:25%; margin-left: 5px;">@kisi.Adres1</a></td>
+                        <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:25%; margin-left: 5px;">@kisi.Adres2</a></td>
                     </tr>
                 }
             </tbody>
         </table>
     }
 </div>
+
+
+<script>
+    // Enter tuşuna basıldığında formu gönder
+    document.getElementById("aramaInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault(); // Formun otomatik submit etmesini engelle
+        document.getElementById("aramaForm").submit();
+      }
+    });
+
+    // Büyüteç ikonuna tıklanınca formu gönder
+    document.getElementById("aramaBtn").addEventListener("click", function () {
+      document.getElementById("aramaForm").submit();
+    });
+
+</script>

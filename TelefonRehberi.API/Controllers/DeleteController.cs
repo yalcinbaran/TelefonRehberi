@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TelefonRehberi.Shared;
+using TelefonRehberi.API.Application;
 
 namespace TelefonRehberi.API.Controllers
 {
@@ -7,13 +7,14 @@ namespace TelefonRehberi.API.Controllers
     [ApiController]
     public class DeleteController : ControllerBase
     {
-        [HttpDelete("KisiSil")]
-        public IActionResult KisiSil([FromBody] Kisi kisi)
+        [HttpDelete("KisiSil/{id}")]
+        public IActionResult KisiSil(long id)
         {
-            var delete = new Application.Delete();
-            var sonuc = delete.KisiSil(kisi);
+            var delete = new Delete();
+            var sonuc = delete.KisiSilById(id);
             return Ok(sonuc);
         }
+
 
         [HttpDelete("KisiTopluSil")]
         public IActionResult KisiTopluSil([FromBody] List<long> kisiIdler)

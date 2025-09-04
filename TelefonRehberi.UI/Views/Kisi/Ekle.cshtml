@@ -13,31 +13,37 @@
                     <div class="d-flex flex-row justify-content-between">
                         <div class="d-flex flex-column" style="width:48%">
                             <label for="Adi">Adı</label>
-                            <input type="text" class="form-control" id="Adi" name="Adi" asp-for="Adi" required />
+                            <input type="text" class="form-control" id="Adi" name="Adi" asp-for="@Model.Adi" />
+                            <span asp-validation-for="@Model.Adi"></span>
                         </div>
                         <div class="d-flex flex-column" style="width:48%">
                             <label for="Soyadi">Soyadı</label>
-                            <input type="text" class="form-control" id="Soyadi" name="Soyadi" asp-for="Soyadi" required />
+                            <input type="text" class="form-control" id="Soyadi" name="Soyadi" asp-for="@Model.Soyadi"   />
+                            <span asp-validation-for="@Model.Soyadi"></span>
                         </div>
                     </div>
 
                     <div class="d-flex flex-row justify-content-between">
                         <div class="d-flex flex-column" style="width:48%">
                             <label for="CepTel">Cep Telefonu</label>
-                            <input type="text" class="form-control" id="CepTel" name="CepTel" asp-for="CepTel" />
+                            <input type="text" class="form-control" id="CepTel" name="CepTel" asp-for="@Model.CepTel" />
+                            <span asp-validation-for="@Model.CepTel"></span>
                         </div>
                         <div class="d-flex flex-column" style="width:48%">
                             <label for="IsTel">İş Telefonu</label>
-                            <input type="text" class="form-control" id="IsTel" name="IsTel" asp-for="IsTel" />
+                            <input type="text" class="form-control" id="IsTel" name="IsTel" asp-for="@Model.IsTel" />
+                            <span asp-validation-for="@Model.IsTel"></span>
                         </div>
                     </div>
                     <div class="d-flex flex-column" style="width: 100%;">
                         <label for="Adres1">Adres 1</label>
-                        <input type="text" class="form-control" id="Adres1" name="Adres1" asp-for="Adres1" required />
+                        <input type="text" class="form-control" id="Adres1" name="Adres1" asp-for="@Model.Adres1"  />
+                        <span asp-validation-for="@Model.Adres2"></span>
                     </div>
                     <div class="d-flex flex-column" style="width: 100%;">
                         <label for="Adres2">Adres 2</label>
-                        <input type="text" class="form-control" id="Adres2" name="Adres2" asp-for="Adres2" required />
+                        <input type="text" class="form-control" id="Adres2" name="Adres2" asp-for="@Model.Adres2" />
+                        <span asp-validation-for="@Model.Adres2"></span>
                     </div>
                     <div class="d-flex flex-row justify-content-end">
                         <button type="submit" class="btn btn-primary mt-3">Kaydet</button>

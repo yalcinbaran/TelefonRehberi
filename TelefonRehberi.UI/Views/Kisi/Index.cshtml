@@ -5,7 +5,7 @@
         <!-- Başlık satırı -->
         <div class="mb-3 d-flex flex-row justify-content-between">
             <h4 style="width:80%">@Model.Adi @Model.Soyadi Detayları</h4>
-            <a class="btn btn-primary" asp-route-id="@Model.Id" asp-controller="Kisi" asp-action="Guncelle" style="width:10%">Düzenle</a>
+
         </div>
 
         <div class="d-flex flex-row" style="width: 100%;">
@@ -21,16 +21,16 @@
                     </div>
                 </div>
 
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="d-flex flex-column" style="width:48%">
-                            <label for="CepTel">Cep Telefonu</label>
-                            <label id="CepTel" name="CepTel">@Model.CepTel</label>
-                        </div>
-                        <div class="d-flex flex-column" style="width:48%">
-                            <label for="IsTel">İş Telefonu</label>
-                            <label id="IsTel" name="IsTel">@Model.IsTel</label>
-                        </div>
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="d-flex flex-column" style="width:48%">
+                        <label for="CepTel">Cep Telefonu</label>
+                        <label id="CepTel" name="CepTel">@Model.CepTel</label>
                     </div>
+                    <div class="d-flex flex-column" style="width:48%">
+                        <label for="IsTel">İş Telefonu</label>
+                        <label id="IsTel" name="IsTel">@Model.IsTel</label>
+                    </div>
+                </div>
 
                 <div class="d-flex flex-column" style="width: 100%;">
                     <label for="Adres1">Adres 1</label>
@@ -41,6 +41,11 @@
                     <label id="Adres2" name="Adres2">@Model.Adres2</label>
                 </div>
             </div>
+        </div>
+        <div class="d-flex flex-row justify-content-end">
+            <a class="btn btn-primary" asp-route-id="@Model.Id" asp-controller="Kisi" asp-action="Guncelle" style="width:10%">Düzenle</a>
+            <a asp-controller="Kisi" asp-action="Sil" asp-route-Id="@Model.Id" class="btn btn-danger mx-1" style="width:10%">Sil</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary mx-1" style="width:10%">İptal</a>
         </div>
     </div>
 </div>

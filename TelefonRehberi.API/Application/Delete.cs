@@ -15,17 +15,18 @@ namespace TelefonRehberi.API.Application
             conn = new SqlConnection(DokuzJsonManager.GetAppSetting().GetConnectionString("DefaultConnection"));
         }
 
-        public bool KisiSil(Kisi kisi)
+        public bool KisiSilById(long Id)
         {
-                    var silinenKisi = conn.Delete(kisi, TableName: "Kisiler");
-                    if (silinenKisi != null)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+            var kisi = conn.QueryToFirstOrDefault<Kisi>("Select * from Kisiler Where Id = @Id", new { Id = Id });
+            var silinenKisi = conn.Delete(kisi, TableName: "Kisiler");
+            if (silinenKisi != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool KisiTopluSil(List<long> kisiIdler)
