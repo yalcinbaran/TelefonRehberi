@@ -1,5 +1,5 @@
+using DataAccess;
 using System.Net.Http.Headers;
-using TelefonRehberi.UI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +16,11 @@ builder.Services.AddHttpClient("ExternalApi", client =>
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
-builder.Services.AddScoped<APIService>();
+builder.Services.AddScoped<Create>();
+builder.Services.AddScoped<Read>();
+builder.Services.AddScoped<Update>();
+builder.Services.AddScoped<Delete>();
+builder.Services.AddScoped<ConnectionProvider>();
 
 var app = builder.Build();
 

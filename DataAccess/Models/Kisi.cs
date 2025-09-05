@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TelefonRehberi.Shared
+namespace DataAccess.Models
 {
     public class Kisi : BaseClass
     {

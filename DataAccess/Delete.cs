@@ -1,20 +1,16 @@
-﻿using DokuzSistemBase.Core.Helper;
+﻿using DataAccess.Models;
 using DokuzSistemBase.Data.Dorm;
-using System.Data.SqlClient;
 using System.Data;
-using TelefonRehberi.Shared;
 
-namespace TelefonRehberi.API.Application
+namespace DataAccess
 {
     public class Delete
     {
-        readonly IDbConnection conn;
-
-        public Delete()
+        private readonly IDbConnection conn;
+        public Delete(ConnectionProvider connection)
         {
-            conn = new SqlConnection(DokuzJsonManager.GetAppSetting().GetConnectionString("DefaultConnection"));
+            conn = connection.GetConnection();
         }
-
         public bool KisiSilById(long Id)
         {
             var kisi = conn.QueryToFirstOrDefault<Kisi>("Select * from Kisiler Where Id = @Id", new { Id = Id });
@@ -64,5 +60,6 @@ namespace TelefonRehberi.API.Application
                 }
             }
         }
+
     }
 }

@@ -1,18 +1,15 @@
-﻿using DokuzSistemBase.Core.Helper;
+﻿using DataAccess.Models;
 using DokuzSistemBase.Data.Dorm;
-using System.Data.SqlClient;
 using System.Data;
-using TelefonRehberi.Shared;
 
-namespace TelefonRehberi.API.Application
+namespace DataAccess
 {
     public class Update
     {
-        IDbConnection conn;
-
-        public Update()
+        private readonly IDbConnection conn;
+        public Update(ConnectionProvider connection)
         {
-            conn = new SqlConnection(DokuzJsonManager.GetAppSetting().GetConnectionString("DefaultConnection"));
+            conn = connection.GetConnection();
         }
 
         public long KisiGuncelle(Kisi kisi)

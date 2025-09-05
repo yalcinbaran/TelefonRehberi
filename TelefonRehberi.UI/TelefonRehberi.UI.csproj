@@ -12,7 +12,7 @@
     <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Dorm.OutputDatas\DokuzSistemBase.Data.Dorm.OutputDatas.csproj" />
     <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Dorm\DokuzSistemBase.Data.Dorm.csproj" />
     <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Infrastructure\DokuzSistemBase.Data.Infrastructure.csproj" />
-    <ProjectReference Include="..\TelefonRehberi.Shared\TelefonRehberi.Shared.csproj" />
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

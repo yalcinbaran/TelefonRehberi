@@ -1,37 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TelefonRehberi.Shared;
+﻿using DataAccess;
+using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TelefonRehberi.UI.Controllers
 {
     public class MenuController : Controller
     {
-        private readonly APIService _apiService;
-        public MenuController(APIService apiService)
+        private readonly Read _read;
+        private readonly Create _create;
+
+        public MenuController(Read read, Create create)
         {
-            _apiService = apiService;
+            _read = read;
+            _create = create;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var menuler = await _apiService.GetAllMenuAsync();
+            var menuler = _read.GetAllMenu();
             return View(menuler);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Ekle()
+        public IActionResult Ekle()
         {
-            var altMenu = await _apiService.GetAllMenuAsync();
-            ViewBag.Menuler = altMenu.OrderBy(x=>x.MenuAdi).ToList();
+            var menuler = _read.GetAllMenu();
+            ViewBag.Menuler = menuler.OrderBy(x=>x.MenuAdi).ToList();
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Ekle(MenuClass menu)
+        public IActionResult Ekle(MenuClass menu)
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", await _apiService.GetAllMenuAsync()); // Hataları göster
+                return View("Index", _read.GetAllMenu()); // Hataları göster
             }
-            bool sonuc = await _apiService.MenuEkleAsync(menu);
+            bool sonuc = _create.MenuEkle(menu);
             if (sonuc)
             {
                 return RedirectToAction("Index");
@@ -39,7 +43,7 @@ namespace TelefonRehberi.UI.Controllers
             else
             {
                 ModelState.AddModelError("", "Menü eklenirken bir hata oluştu.");
-                return View("Index", await _apiService.GetAllMenuAsync());
+                return View("Index", _read.GetAllMenu());
             }
         }
     }
