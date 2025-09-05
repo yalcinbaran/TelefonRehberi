@@ -27,6 +27,14 @@ namespace TelefonRehberi.UI
             return data ?? new List<Kisi>();
         }
 
+        public async Task<List<MenuClass>> GetAllMenuAsync()
+        {
+            var response = await _httpClient.GetAsync("api/Read/GetAllMenu");
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadFromJsonAsync<List<MenuClass>>();
+            return data ?? new List<MenuClass>();
+        }
+
         public async Task<long> KisiEkleAsync(Kisi kisi)
         {
             var response = await _httpClient.PostAsJsonAsync("api/Create/KisiEkle", kisi);

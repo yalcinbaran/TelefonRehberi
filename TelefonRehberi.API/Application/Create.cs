@@ -27,5 +27,11 @@ namespace TelefonRehberi.API.Application
                 return 0;
             }
         }
+
+        public bool MenuEkle(MenuClass menu)
+        {
+            var eklenenMenu = conn.Insert(menu, TableName: "Menuler");
+            return eklenenMenu.Id > 0;
+        }
     }
 }

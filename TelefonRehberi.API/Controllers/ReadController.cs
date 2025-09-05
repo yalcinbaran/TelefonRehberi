@@ -21,5 +21,12 @@ namespace TelefonRehberi.API.Controllers
             var kisi = new Read().GetById(id);
             return Ok(kisi);
         }
+
+        [HttpGet("GetAllMenu")]
+        public IActionResult GetAllMenu()
+        {
+            var menuler = new Read().GetAllMenu();
+            return Ok(menuler);
+        }
     }
 }

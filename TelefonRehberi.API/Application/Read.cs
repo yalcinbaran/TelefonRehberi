@@ -40,5 +40,18 @@ namespace TelefonRehberi.API.Application
                 return null;
             }
         }
+
+        public List<MenuClass> GetAllMenu()
+        {
+            try
+            {
+                var menuler = conn.Query<MenuClass>("Select * From Menuler").ToList();
+                return menuler;
+            }
+            catch
+            {
+                return new List<MenuClass>();
+            }
+        }
     }
 }

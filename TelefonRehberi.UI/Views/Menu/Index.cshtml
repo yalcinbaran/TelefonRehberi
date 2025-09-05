@@ -1,0 +1,36 @@
+﻿@model List<MenuClass>
+@{
+    ViewData["Title"] = "Menüler";
+}
+
+<div class="text-center  mx-auto">
+    <div class="d-flex justify-content-between mb-5">
+        <h3>Menüler</h3>
+    </div>
+    @functions {
+        void RenderMenu(List<MenuClass> items, long? parentId)
+        {
+            var children = items.Where(x => x.ParentId == parentId).ToList();
+            if (children.Any())
+            {
+                <ul>
+                    @foreach (var item in children)
+                    {
+                        <li>
+                            @item.MenuAdi
+                            @{
+                                RenderMenu(items, item.Id);
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+        }
+    }
+
+    @{
+        RenderMenu(Model, null);
+    }
+
+
+</div>
