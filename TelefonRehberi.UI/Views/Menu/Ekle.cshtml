@@ -1,0 +1,26 @@
+﻿@model MenuClass
+
+@{
+    ViewData["Title"] = "Menü Ekle";
+}
+
+<div class="text-center  mx-auto">
+    <h3>Yeni Menü Ekle</h3>
+    <form asp-action="Ekle" asp-controller="Menu" method="post" class="mt-4" style="max-width: 500px; margin: auto;">
+        <div class="form-group mb-3 text-start">
+            <label for="MenuAdi" class="form-label">Menü Adı</label>
+            <input type="text" class="form-control" id="MenuAdi" name="MenuAdi" required />
+        </div>
+        <div class="form-group mb-3 text-start">
+            <label for="ParentId" class="form-label">Üst Menü</label>
+            <select class="form-select" id="ParentId" name="ParentId">
+                <option value="0">-- Üst Menü Seçiniz --</option>
+                @foreach (var menu in ViewBag.Menuler as List<MenuClass>)
+                {
+                    <option value="@menu.Id">@menu.MenuAdi</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+</div>

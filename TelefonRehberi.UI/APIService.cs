@@ -35,6 +35,14 @@ namespace TelefonRehberi.UI
             return data ?? new List<MenuClass>();
         }
 
+        public async Task<bool> MenuEkleAsync(MenuClass menu)
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/Create/MenuEkle", menu);
+            response.EnsureSuccessStatusCode();
+            var result = await response.Content.ReadFromJsonAsync<bool>();
+            return result;
+        }
+
         public async Task<long> KisiEkleAsync(Kisi kisi)
         {
             var response = await _httpClient.PostAsJsonAsync("api/Create/KisiEkle", kisi);
