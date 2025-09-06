@@ -26,21 +26,32 @@ namespace DataAccess
 
         public IEnumerable<Kisi> GetAllBySearchKeyword(string? keyword)
         {
-            var tumKisiler = GetAll();
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
-                return tumKisiler;
-            }
+            //var tumKisiler = GetAll();
+            //if (string.IsNullOrWhiteSpace(keyword))
+            //{
+            //    return tumKisiler;
+            //}
             
-            keyword = keyword.ToLower();
-            var filteredKisiler = tumKisiler.Where(k =>
-                (!string.IsNullOrEmpty(k.Adi) && k.Adi.ToLower().Trim().Contains(keyword)) ||
-                (!string.IsNullOrEmpty(k.Soyadi) && k.Soyadi.ToLower().Replace(" ", "").Contains(keyword)) ||
-                (!string.IsNullOrEmpty(k.CepTel) && k.CepTel.ToLower().Replace(" ", "").Contains(keyword)) ||
-                (!string.IsNullOrEmpty(k.IsTel) && k.IsTel.ToLower().Replace(" ", "").Contains(keyword)) ||
-                (!string.IsNullOrEmpty(k.Adres1) && k.Adres1.ToLower().Contains(keyword)) ||
-                (!string.IsNullOrEmpty(k.Adres2) && k.Adres2.ToLower().Contains(keyword))
-            );
+            //keyword = keyword.ToLower();
+            //var filteredKisiler = tumKisiler.Where(k =>
+            //    (!string.IsNullOrEmpty(k.Adi) && k.Adi.ToLower().Trim().Contains(keyword)) ||
+            //    (!string.IsNullOrEmpty(k.Soyadi) && k.Soyadi.ToLower().Trim().Contains(keyword)) ||
+            //    (!string.IsNullOrEmpty(k.CepTel) && k.CepTel.ToLower().Trim().Contains(keyword)) ||
+            //    (!string.IsNullOrEmpty(k.IsTel) && k.IsTel.ToLower().Trim().Contains(keyword)) ||
+            //    (!string.IsNullOrEmpty(k.Adres1) && k.Adres1.ToLower().Trim().Contains(keyword)) ||
+            //    (!string.IsNullOrEmpty(k.Adres2) && k.Adres2.ToLower().Trim().Contains(keyword))
+            //);
+            //return filteredKisiler;
+
+            string query = "SELECT * FROM Kisiler WHERE @keyword IS NULL OR LTRIM(RTRIM(@keyword)) = '' "+
+                                                  "OR LOWER(Adi) LIKE '%' + LOWER(@keyword) + '%'"+
+                                                  "OR LOWER(Soyadi) LIKE '%' + LOWER(@keyword) + '%'" +
+                                                  "OR LOWER(CepTel) LIKE '%' + LOWER(@keyword) + '%'"+
+                                                  "OR LOWER(IsTel) LIKE '%' + LOWER(@keyword) + '%'"+
+                                                  "OR LOWER(Adres1) LIKE '%' + LOWER(@keyword) + '%'"+
+                                                  "OR LOWER(Adres2) LIKE '%' + LOWER(@keyword) + '%';";
+
+            var filteredKisiler = conn.Query<Kisi>(query, new { keyword = keyword ?? string.Empty });
             return filteredKisiler;
         }
 
@@ -57,11 +68,11 @@ namespace DataAccess
             }
         }
 
-        public List<MenuClass> GetAllMenu()
+        public IEnumerable<MenuClass> GetAllMenu()
         {
             try
             {
-                var menuler = conn.Query<MenuClass>("Select * From Menuler").ToList();
+                var menuler = conn.Query<MenuClass>("Select * From Menuler");
                 return menuler;
             }
             catch
@@ -69,6 +80,5 @@ namespace DataAccess
                 return new List<MenuClass>();
             }
         }
-
     }
 }

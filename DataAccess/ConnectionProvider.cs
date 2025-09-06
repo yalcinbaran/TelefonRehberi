@@ -8,7 +8,7 @@ namespace DataAccess
 
         public SqlConnection GetConnection()
         {
-            return new SqlConnection("Server=localhost;Database=VoidSystem;User Id=sa;Password=P@ssw0rd;");
+            return new SqlConnection("Server=localhost;Database=TelefonRehberi;Integrated Security=True");
         }
     }
 }

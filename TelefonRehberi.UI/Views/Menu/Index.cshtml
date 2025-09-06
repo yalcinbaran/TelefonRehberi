@@ -1,5 +1,4 @@
-﻿@model List<MenuClass>
-@{
+﻿@{
     ViewData["Title"] = "Menüler";
 }
 
@@ -8,33 +7,6 @@
         <h3>Menüler</h3>
     </div>
     <div class="d-flex flex-column justify-content-start">
-        @functions {
-            void RenderMenu(List<MenuClass> items, long? parentId, string prefix)
-            {
-                var children = items.Where(x => x.ParentId == parentId).ToList();
-                if (children.Any())
-                {
-                    <ul class="d-flex flex-column text-start">
-                        @for (int i = 0; i < children.Count; i++)
-                        {
-                            var currentPrefix = string.IsNullOrEmpty(prefix) ? (i + 1).ToString() : prefix + "." + (i + 1);
-
-                            <li>
-                                @currentPrefix - @children[i].MenuAdi
-                                @{
-                                    RenderMenu(items, children[i].Id, currentPrefix);
-                                }
-                            </li>
-                        }
-                    </ul>
-                }
-            }
-        }
+        @Html.Raw(ViewBag.MenulerHTML)
     </div>
-
-    @{
-        RenderMenu(Model, 0, "");
-    }
-
-
 </div>

@@ -28,7 +28,7 @@ namespace TelefonRehberi.UI.Controllers
         [HttpGet]
         public IActionResult Ekle()
         {
-            return View();
+            return View(new Kisi());
         }
 
         [HttpPost]
