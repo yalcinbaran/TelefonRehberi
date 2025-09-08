@@ -17,10 +17,5 @@ namespace DataAccess
             return eklenenKisi.Id;
         }
 
-        public bool MenuEkle(MenuClass menu)
-        {
-            var eklenenMenu = conn.Insert(menu, TableName: "Menuler");
-            return eklenenMenu.Id > 0;
-        }
     }
 }

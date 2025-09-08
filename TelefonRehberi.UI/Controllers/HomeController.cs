@@ -1,7 +1,7 @@
-﻿using DataAccess;
-using DataAccess.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using TelefonRehberi.Operations;
+using TelefonRehberi.Operations.Models;
 using TelefonRehberi.UI.Models;
 
 namespace TelefonRehberi.UI.Controllers
@@ -9,24 +9,24 @@ namespace TelefonRehberi.UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly Read _read;
+        private readonly HomeOperations _homeOperations;
 
-        public HomeController(ILogger<HomeController> logger, Read read)
+        public HomeController(ILogger<HomeController> logger, HomeOperations homeOperations)
         {
             _logger = logger;
-            _read = read;
+            _homeOperations = homeOperations;
         }
 
         public IActionResult Index()
         {
-            List<Kisi> kisiler = _read.GetAll();
+            IEnumerable<Kisi> kisiler = _homeOperations.GetAll();
             return View(kisiler);
         }
 
         [HttpPost]
         public IActionResult Index(string? keyword = null)
         {
-            var filteredKisiler = _read.GetAllBySearchKeyword(keyword);
+            var filteredKisiler = _homeOperations.GetAllBySearchKeyword(keyword);
             ViewBag.AramaKelimesi = keyword;
             return View(filteredKisiler);
         }

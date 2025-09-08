@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Models
+﻿namespace TelefonRehberi.Operations.Models
 {
     public abstract class BaseClass
     {

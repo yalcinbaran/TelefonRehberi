@@ -1,27 +1,21 @@
-﻿using DataAccess;
-using DataAccess.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TelefonRehberi.Operations;
+using TelefonRehberi.Operations.Models;
 
 namespace TelefonRehberi.UI.Controllers
 {
     public class KisiController : Controller
     {
-        private readonly Read _read;
-        private readonly Create _create;
-        private readonly Update _update;
-        private readonly Delete _delete;
+        private readonly KisiOperations _kisiOperations;
 
-        public KisiController(Read read, Create create, Update update, Delete delete)
+        public KisiController(KisiOperations kisiOperations)
         {
-            _read = read;
-            _create = create;
-            _update = update;
-            _delete = delete;
+            _kisiOperations = kisiOperations;
         }
 
         public IActionResult Index(long Id)
         {
-            var kisi = _read.GetById(Id);
+            var kisi = _kisiOperations.GetById(Id);
             return View(kisi);
         }
 
@@ -39,27 +33,27 @@ namespace TelefonRehberi.UI.Controllers
                 return View(kisi); // Hataları göster
             }
 
-            long Id = _create.KisiEkle(kisi);
+            long Id = _kisiOperations.KisiEkle(kisi);
             return RedirectToAction("Index", new { Id });
         }
 
         [HttpGet]
         public IActionResult Guncelle(long Id)
         {
-            var kisi = _read.GetById(Id);
+            var kisi = _kisiOperations.GetById(Id);
             return View(kisi);
         }
 
         [HttpPost]
         public IActionResult Guncelle(Kisi kisi)
         {
-            long Id = _update.KisiGuncelle(kisi);
+            long Id = _kisiOperations.KisiGuncelle(kisi);
             return RedirectToAction("Index", new { Id });
         }
 
         public IActionResult Sil(long Id)
         {
-            bool sonuc = _delete.KisiSilById(Id);
+            bool sonuc = _kisiOperations.KisiSilById(Id);
             if (sonuc)
             {
                 return RedirectToAction("Index", "Home");

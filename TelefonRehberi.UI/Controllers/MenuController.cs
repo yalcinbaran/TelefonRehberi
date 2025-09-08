@@ -1,52 +1,36 @@
-﻿using DataAccess;
-using DataAccess.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using TelefonRehberi.Operations;
+using TelefonRehberi.Operations.Models;
 
 namespace TelefonRehberi.UI.Controllers
 {
     public class MenuController : Controller
     {
-        private readonly Read _read;
-        private readonly Create _create;
+        private readonly MenuOperations _menuOperations;
 
-        public MenuController(Read read, Create create)
+        public MenuController(MenuOperations menuOperations)
         {
-            _read = read;
-            _create = create;
+            _menuOperations = menuOperations;
         }
+
         public IActionResult Index()
         {
-            var menuler = _read.GetAllMenu();
-            string MenulerHTML = "<ul>";
-            string sub = GetMenuHTML(menuler, 0);
-            MenulerHTML = MenulerHTML + sub + "</ul>";
-            ViewBag.MenulerHTML = MenulerHTML;
+            StringBuilder menuString = new();
+            var menuler = _menuOperations.GetAllMenu();
+            menuString.Append("<ul>");
+            string sub = _menuOperations.GetMenuHTML(menuler, 0);
+            menuString.Append(sub).Append("<ul>");
+            
+            ViewBag.MenulerHTML = menuString.ToString();
             return View(menuler);
         }
 
-        private string GetMenuHTML(IEnumerable<MenuClass> menuler, long parentID, string prefix = "")
-        {
-            string HTMLstr = "";
-            var altMenuler = menuler.Where(x => x.ParentId == parentID).OrderBy(x => x.MenuAdi).ToList();
-            if (altMenuler.Any())
-            {
-                for (int i = 0; i < altMenuler.Count; i++)
-                {
-                    var menu = altMenuler[i];
-                    var currentPrefix = string.IsNullOrEmpty(prefix) ? (i + 1).ToString() : prefix + "." + (i + 1);
-                    HTMLstr += $"<li>{currentPrefix}{menu.MenuAdi}";
-                    HTMLstr += GetMenuHTML(menuler, menu.Id, currentPrefix);
-                    HTMLstr += "</li>";
-                }
-            }
-            return HTMLstr;
-        }
 
         [HttpGet]
         public IActionResult Ekle()
         {
-            var menuler = _read.GetAllMenu();
+            var menuler = _menuOperations.GetAllMenu();
             ViewBag.Menuler = menuler.OrderBy(x => x.MenuAdi).ToList();
             return View();
         }
@@ -56,9 +40,9 @@ namespace TelefonRehberi.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", _read.GetAllMenu()); // Hataları göster
+                return View("Index", _menuOperations.GetAllMenu()); // Hataları göster
             }
-            bool sonuc = _create.MenuEkle(menu);
+            bool sonuc = _menuOperations.MenuEkle(menu);
             if (sonuc)
             {
                 return RedirectToAction("Index");
@@ -66,7 +50,7 @@ namespace TelefonRehberi.UI.Controllers
             else
             {
                 ModelState.AddModelError("", "Menü eklenirken bir hata oluştu.");
-                return View("Index", _read.GetAllMenu());
+                return View("Index", _menuOperations.GetAllMenu());
             }
         }
     }

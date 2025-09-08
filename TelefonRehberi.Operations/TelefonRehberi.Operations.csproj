@@ -1,10 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Core.Helper\DokuzSistemBase.Core.Helper.csproj" />
@@ -12,7 +16,6 @@
     <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Dorm.OutputDatas\DokuzSistemBase.Data.Dorm.OutputDatas.csproj" />
     <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Dorm\DokuzSistemBase.Data.Dorm.csproj" />
     <ProjectReference Include="..\..\DokuzSistemBase\DokuzSistemBase.Data.Infrastructure\DokuzSistemBase.Data.Infrastructure.csproj" />
-    <ProjectReference Include="..\TelefonRehberi.Operations\TelefonRehberi.Operations.csproj" />
   </ItemGroup>
 
 </Project>
