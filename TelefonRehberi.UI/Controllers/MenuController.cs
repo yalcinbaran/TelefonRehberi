@@ -33,7 +33,7 @@ namespace TelefonRehberi.UI.Controllers
             var menuler = _menuOperations.GetAllMenu();
             Dictionary<string, string> menuList = new();
             menuList = _menuOperations.GetMenuList(menuList, menuler, 0);
-            ViewBag.Menuler = menuList;
+            ViewData["Menulist"] = menuList;
             return View();
         }
 

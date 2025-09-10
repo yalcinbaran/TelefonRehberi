@@ -52,15 +52,11 @@ namespace TelefonRehberi.Operations
             var altMenuler = menuler.Where(x => x.ParentId == parentID).OrderBy(x => x.Id).ToList();
             if (altMenuler.Any())
             {
-                string menuStr;
-                string idStr;
                 for (int i = 0; i < altMenuler.Count; i++)
                 {
                     var menu = altMenuler[i];
                     var currentPrefix = string.IsNullOrEmpty(prefix) ? (i + 1).ToString() : prefix + "." + (i + 1);
-                    menuStr = $"{currentPrefix} - {menu.MenuAdi}";
-                    idStr = menu.Id.ToString();
-                    menuList.Add(idStr, menuStr);
+                    menuList.Add(menu.Id.ToString(), $"{currentPrefix} - {menu.MenuAdi}");
                     GetMenuList(menuList, menuler, menu.Id, currentPrefix);
                 }
             }
