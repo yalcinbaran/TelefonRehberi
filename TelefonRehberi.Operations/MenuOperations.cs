@@ -47,6 +47,31 @@ namespace TelefonRehberi.Operations
             return HTMLstr.ToString();
         }
 
+        public Dictionary<string, string> GetMenuList(Dictionary<string, string> menuList, IEnumerable<MenuClass> menuler, long parentID, string prefix = "")
+        {
+            var altMenuler = menuler.Where(x => x.ParentId == parentID).OrderBy(x => x.Id).ToList();
+            if (altMenuler.Any())
+            {
+                string menuStr;
+                string idStr;
+                for (int i = 0; i < altMenuler.Count; i++)
+                {
+                    var menu = altMenuler[i];
+                    var currentPrefix = string.IsNullOrEmpty(prefix) ? (i + 1).ToString() : prefix + "." + (i + 1);
+                    menuStr = $"{currentPrefix} - {menu.MenuAdi}";
+                    idStr = menu.Id.ToString();
+                    menuList.Add(idStr, menuStr);
+                    GetMenuList(menuList, menuler, menu.Id, currentPrefix);
+                }
+            }
+            else
+            {
+                menuList = new Dictionary<string, string>();
+            }
+            return menuList;
+        }
+
+
         public bool MenuEkle(MenuClass menu)
         {
             var eklenenMenu = conn.Insert(menu, TableName: "Menuler");

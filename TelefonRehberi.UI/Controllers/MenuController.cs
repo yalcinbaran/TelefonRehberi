@@ -31,7 +31,9 @@ namespace TelefonRehberi.UI.Controllers
         public IActionResult Ekle()
         {
             var menuler = _menuOperations.GetAllMenu();
-            ViewBag.Menuler = menuler.OrderBy(x => x.MenuAdi).ToList();
+            Dictionary<string, string> menuList = new();
+            menuList = _menuOperations.GetMenuList(menuList, menuler, 0);
+            ViewBag.Menuler = menuList;
             return View();
         }
 
