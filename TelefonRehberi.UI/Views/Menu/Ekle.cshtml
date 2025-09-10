@@ -15,9 +15,9 @@
             <label for="ParentId" class="form-label">Üst Menü</label>
             <select class="form-select" id="ParentId" name="ParentId">
                 <option value="0">-- Üst Menü Seçiniz --</option>
-                @foreach (var menu in ViewBag.Menuler as IEnumerable<MenuClass>)
+                @foreach (var menu in ViewBag.Menuler as Dictionary<string,string>)
                 {
-                    <option value="@menu.Id">@menu.MenuAdi</option>
+                    <option value="@menu.Key">@menu.Value</option>
                 }
             </select>
         </div>
