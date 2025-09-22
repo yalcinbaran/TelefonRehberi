@@ -4,14 +4,10 @@ using TelefonRehberi.Operations.Models;
 
 namespace TelefonRehberi.Operations
 {
-    public class HomeOperations
+    public class AjaxOperations
     {
-        private readonly ConnectionProvider _connectionProvider;
+        private readonly ConnectionProvider? _connectionProvider;
         private IDbConnection conn => _connectionProvider.GetConnection();
-        public HomeOperations(ConnectionProvider connectionProvider)
-        {
-            _connectionProvider = connectionProvider;
-        }
 
         public IEnumerable<Kisi> GetAll()
         {
@@ -28,8 +24,12 @@ namespace TelefonRehberi.Operations
 
         public IEnumerable<Kisi> GetAllBySearchKeyword(string? keyword)
         {
-            string query = "SELECT * FROM Kisiler WHERE (ISNULL(Adi, '') + ISNULL(Soyadi, '') + ISNULL(CepTel, '') +  ISNULL(IsTel, '') + ISNULL(Adres1, '') + ISNULL(Adres2, '')) LIKE '%' + @keyword + '%'";
-            //string query = "SELECT * FROM Kisiler WHERE (Adi+Soyadi+CepTel+IsTel+Adres1+Adres2) Like @keyword";
+            string query = "SELECT * FROM Kisiler WHERE Adi LIKE '%' + @keyword + '%' " +
+                "                                    OR Soyadi LIKE '%' + @keyword + '%' " +
+                "                                    OR CepTel LIKE '%' + @keyword + '%' " +
+                "                                    OR IsTel LIKE '%' + @keyword + '%' " +
+                "                                    OR Adres1 LIKE '%' + @keyword + '%' " +
+                "                                    OR Adres2 LIKE '%' + @keyword + '%'";
 
             var filteredKisiler = conn.Query<Kisi>(query, new { keyword = keyword ?? string.Empty });
             return filteredKisiler;

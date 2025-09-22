@@ -17,7 +17,7 @@
             <div style="display: flex; align-items: center; width: 250px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
                 <form id="aramaForm" method="post" action="/Home/Index" style="display: flex; align-items: center; width: 300px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
                     <input type="search" name="keyword" id="aramaInput" value="@ViewBag.AramaKelimesi" placeholder="Ara..." style="flex: 1; border: none; outline: none;" />
-                    <span style="margin-left: 8px; cursor: pointer;" onclick="document.getElementById('aramaForm').submit();">🔍</span>
+                    <span id="aramaBtn" style="margin-left: 8px; cursor: pointer;">🔍</span>
                 </form>
 
 
@@ -54,17 +54,39 @@
 
 
 <script>
-    // Enter tuşuna basıldığında formu gönder
-    document.getElementById("aramaInput").addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault(); // Formun otomatik submit etmesini engelle
-        document.getElementById("aramaForm").submit();
-      }
-    });
+    $("#aramaInput").on("keydown", function(event){
+        if(event.key === "Enter"){
+            event.preventDefault();
+            const keyword = $("#aramaInput").val();
+            $.ajax({
+                url: '/Home/Index',
+                type: 'POST',
+                data: { keyword: keyword },
+                success: function (data) {
+                    $("#tbody").html("");
+                    $("#tbody").html(data);
+                },
+                error: function (err) {
+                    console.log(err.responseText);
+                }
+            });
+        }
+    })
 
-    // Büyüteç ikonuna tıklanınca formu gönder
-    document.getElementById("aramaBtn").addEventListener("click", function () {
-      document.getElementById("aramaForm").submit();
-    });
+    $("#aramaBtn").on("click", function () {
+    const keyword = $("#aramaInput").val();
+      $.ajax({
+        url: '/Home/Index',
+        type: 'POST',
+        data: { keyword: keyword },
+        success: function (data) {
+          $("#tbody").html("");
+            $("#tbody").html(data);
+        },
+        error: function (err) {
+          console.log(err.responseText);
+        }
+      });
+    })
 
 </script>

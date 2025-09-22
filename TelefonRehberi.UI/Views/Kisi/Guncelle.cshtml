@@ -40,12 +40,87 @@
                         <input type="text" class="form-control" id="Adres2" name="Adres2" asp-for="Adres2" required />
                     </div>
                     <div class="d-flex flex-row justify-content-end">
-                        <button type="submit" class="btn btn-primary mt-3" style="width:10%">Kaydet</button>
+@*                      <button type="submit" class="btn btn-primary mt-3" style="width:10%">Kaydet</button>
                         <a asp-controller="Kisi" asp-action="Sil" asp-route-Id="@Model.Id" class="btn btn-danger mt-3 mx-1" style="width:10%">Sil</a>
-                        <a asp-controller="Kisi" asp-action="Index" asp-route-Id="@Model.Id" class="btn btn-secondary mt-3" style="width:10%">İptal</a>
+                        <a asp-controller="Kisi" asp-action="Index" asp-route-Id="@Model.Id" class="btn btn-secondary mt-3" style="width:10%">İptal</a> *@
+                        <a id="btnKaydet" class="btn btn-primary mt-3" style="width:10%">Kaydet</a>
+                        <a id="btnSil" class="btn btn-danger mt-3 mx-1" style="width:10%">Sil</a>
+                        <a id="btnIptal" class="btn btn-secondary mt-3" style="width:10%">İptal</a>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
+<script>
+    $("#btnKaydet").on("click",function(){
+        var formData = {
+            Id: @Model.Id,
+            Adi: $("#Adi").val(),
+            Soyadi: $("#Soyadi").val(),
+            CepTel: $("#CepTel").val(),
+            IsTel: $("#IsTel").val(),
+            Adres1: $("#Adres1").val(),
+            Adres2: $("#Adres2").val()
+        };
+        $.ajax({
+            url: '/Kisi/Guncelle',
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                $.ajax({
+                    url: '/Kisi/Index',
+                    type: 'GET',
+                    data: { id: @Model.Id },
+                    success: function (data) {
+                        $("body").html(data);
+                    },
+                    error: function (err) {
+                        console.log(err.responseText);
+                    }
+                });
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    });
+
+
+    $("#btnSil").on("click",function(){
+        $.ajax({
+            url: '/Kisi/Sil',
+            type: 'GET',
+            data: { id: @Model.Id },
+            success: function (){
+                $.ajax({
+                    url: '/Home/Index',
+                    type: 'GET',
+                    success: function (data) {
+                        $("body").html(data);
+                    },
+                    error: function (err) {
+                        console.log(err.responseText);
+                    }
+                });
+            },
+            error: function(data){
+                console.log(data)
+            }
+        })
+    });
+
+    $("#btnIptal").on("click", function(){
+        $.ajax({
+            url: '/Home/Index',
+            type: 'GET',
+            success: function (data) {
+                $("body").html(data);
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        })
+    });
+
+</script>

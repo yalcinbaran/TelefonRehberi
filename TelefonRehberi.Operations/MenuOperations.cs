@@ -60,10 +60,6 @@ namespace TelefonRehberi.Operations
                     GetMenuList(menuList, menuler, menu.Id, currentPrefix);
                 }
             }
-            else
-            {
-                menuList = new Dictionary<string, string>();
-            }
             return menuList;
         }
 

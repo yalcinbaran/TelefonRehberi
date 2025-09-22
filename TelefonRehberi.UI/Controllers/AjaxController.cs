@@ -1,19 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using TelefonRehberi.Operations;
 using TelefonRehberi.Operations.Models;
-using TelefonRehberi.UI.Models;
 
 namespace TelefonRehberi.UI.Controllers
 {
-    public class HomeController : Controller
+    public class AjaxController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly HomeOperations _homeOperations;
 
-        public HomeController(ILogger<HomeController> logger, HomeOperations homeOperations)
+        public AjaxController(HomeOperations homeOperations)
         {
-            _logger = logger;
             _homeOperations = homeOperations;
         }
 
@@ -28,18 +24,20 @@ namespace TelefonRehberi.UI.Controllers
         {
             var filteredKisiler = _homeOperations.GetAllBySearchKeyword(keyword);
             ViewBag.AramaKelimesi = keyword;
+            return View(filteredKisiler);
+        }
+
+        [HttpPost("AramaAjax")]
+        public IActionResult AramaAjax([FromBody] AramaRequest request)
+        {
+            var filteredKisiler = _homeOperations.GetAllBySearchKeyword(request.Keyword);
+            ViewBag.AramaKelimesi = request.Keyword;
             return new JsonResult(filteredKisiler);
         }
 
-        public IActionResult Privacy()
+        public class AramaRequest
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            public string? Keyword { get; set; }
         }
     }
 }

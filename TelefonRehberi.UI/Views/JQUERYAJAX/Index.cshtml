@@ -1,0 +1,56 @@
+﻿<div class="d-flex flex-row justify-content-between mb-3">
+    <h2>jQuery Ajax - Tablo Getirme</h2>
+    <div id="Buttons" class="d-flex flex-row">
+        <button id="temizle" class="btn btn-secondary">Temizle</button>
+        <button id="dataGetir" class="btn btn-secondary mx-2" paging="9">Data getir</button>
+    </div>
+</div>
+
+<div id="tableDiv">
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        var table = $('<table></table>').attr({'id': 'myTable',
+                                               'class': 'table table-bordered table-striped'});
+        var thead= $('<thead><tr><th>Id</th><th>Adı Soyadı</th><th>Görevi</th><th>Şehir</th><th>İşe Giriş Tarihi</th></tr></thead>');
+        var tbody = $('<tbody></tbody>').attr('id','tblBody');
+        $("#tableDiv").append(table);
+        $("#myTable").append(thead);
+        $("#myTable").append(tbody);
+        $.ajax({
+            url: '/html/table.html',
+            type: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $("#tblBody").html(data);
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    });
+
+
+
+
+    $("#temizle").on("click", function() {
+        $("#tblBody").html("");
+    });
+
+    $("#dataGetir").on("click", function () {
+        $.ajax({
+            url: '/html/table.html',
+            type: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $("#tblBody").html(data);
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    });
+
+</script>

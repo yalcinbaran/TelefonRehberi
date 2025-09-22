@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Kisi>
+@{
+    ViewData["Title"] = "Tüm Kayıtlar - AJAX";
+}
+
+@*Ajax Index*/*@
+
+<div class="text-center  mx-auto">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info d-flex" role="alert" style="flex-direction:column">
+            Rehberde kayıtlı kişi bulunmamaktadır. "Yeni Kayıt" sayfasından kişi ekleyebilirsiniz.
+        </div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between mb-5">
+            <h3>Tüm Kayıtlar AJAX</h3>
+            <div style="display: flex; align-items: center; width: 250px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
+                <form id="aramaForm" style="display: flex; align-items: center; width: 300px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
+                    <input type="search" onblur="fetchKisiler(this.value)" name="keyword" id="aramaInput" value="@ViewBag.AramaKelimesi" placeholder="Ara..." style="flex: 1; border: none; outline: none;" />
+                    <span id="aramaBtn" style="margin-left: 8px; cursor: pointer;">🔍</span>
+                </form>
+            </div>
+        </div>
+        <div>
+            <table style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>Adı</th>
+                        <th>Soyadı</th>
+                        <th>Cep Telefonu</th>
+                        <th>İş Telefonu</th>
+                        <th>Adres 1</th>
+                        <th>Adres 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var kisi in Model)
+                    {
+                        <tr>
+                            <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:15%; min-width:15%;margin-left: 5px;">@kisi.Adi</a></td>
+                            <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:15%; min-width:15%; margin-left: 5px;">@kisi.Soyadi</a></td>
+                            <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:10%;  min-width:10%;margin-left: 5px;">@kisi.CepTel</a></td>
+                            <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:10%; min-width:10%; margin-left: 5px;">@kisi.IsTel</a></td>
+                            <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:25%; min-width:25%; margin-left: 5px;">@kisi.Adres1</a></td>
+                            <td><a asp-controller="Kisi" asp-action="Index" asp-route-id="@kisi.Id" style="width:25%; min-width:25%; margin-left: 5px;">@kisi.Adres2</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<script>
+    const form = document.getElementById("aramaForm");
+    const input = document.getElementById("aramaInput");
+    const button = document.getElementById("aramaBtn");
+
+    async function fetchKisiler(keyword) {
+        try {
+            const response = await fetch("/AramaAjax", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? ''
+                },
+                body: JSON.stringify({ keyword: keyword })
+            });
+
+            if (!response.ok) throw new Error("Sunucu hatası");
+
+            const kisiler = await response.json();
+            guncelleTablo(kisiler);
+
+        } catch (error) {
+            console.error("Hata oluştu:", error);
+        }
+    }
+
+    function guncelleTablo(kisiler) {
+        const tbody = document.querySelector("table tbody");
+        tbody.innerHTML = "";
+
+        kisiler.forEach(kisi => {
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td><a href="/Kisi/Index/${kisi.id}" style="width:15%; min-width:15%; margin-left: 5px;">${kisi.adi}</a></td>
+                <td><a href="/Kisi/Index/${kisi.id}" style="width:15%; min-width:15%; margin-left: 5px;">${kisi.soyadi}</a></td>
+                <td><a href="/Kisi/Index/${kisi.id}" style="width:10%; min-width:10%; margin-left: 5px;">${kisi.cepTel}</a></td>
+                <td><a href="/Kisi/Index/${kisi.id}" style="width:10%; min-width:10%; margin-left: 5px;">${kisi.isTel}</a></td>
+                <td><a href="/Kisi/Index/${kisi.id}" style="width:25%; min-width:25%; margin-left: 5px;">${kisi.adres1}</a></td>
+                <td><a href="/Kisi/Index/${kisi.id}" style="width:25%; min-width:25%; margin-left: 5px;">${kisi.adres2}</a></td>
+            `;
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Enter tuşu ile arama
+    input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            fetchKisiler(input.value);
+        }
+    });
+
+    // Arama ikonuna tıklayınca arama
+    button.addEventListener("click", function () {
+        fetchKisiler(input.value);
+    });
+</script>

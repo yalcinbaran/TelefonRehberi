@@ -42,7 +42,7 @@ namespace TelefonRehberi.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", _menuOperations.GetAllMenu()); // Hataları göster
+                return View("Index", _menuOperations.GetAllMenu());
             }
             bool sonuc = _menuOperations.MenuEkle(menu);
             if (sonuc)

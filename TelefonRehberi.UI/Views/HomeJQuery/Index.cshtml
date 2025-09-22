@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Tüm Kayıtlar - JQuery";
+}
+
+<div class="text-center  mx-auto" id="containerDiv">
+        <div class="d-flex justify-content-between mb-5">
+            <h3>Tüm Kayıtlar</h3>
+            <div style="display: flex; align-items: center; width: 250px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
+                    <input type="search" name="keyword" id="aramaInput" value="@ViewBag.AramaKelimesi" placeholder="Ara..." style="flex: 1; border: none; outline: none;" />
+            </div>
+        </div>
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        var mainDiv = $("#containerDiv");
+
+        $.ajax({
+            url: '/HomeJQuery/GetAll',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var table = $('<table></table>').attr({
+                    'id': 'myTable',
+                    'class': 'table table-bordered table-striped',
+                    'style': 'width:100%'
+                });
+
+                var thead = $('<thead><tr><th>Adı</th><th>Soyadı</th><th>Cep Telefonu</th><th>İş Telefonu</th><th>Adres 1</th><th>Adres 2</th></tr></thead>');
+                var tbody = $('<tbody></tbody>').attr('id', 'tblBody');
+
+                table.append(thead);
+                table.append(tbody);
+                mainDiv.append(table);
+
+                data.forEach(item => {
+                    var row = $('<tr></tr>');
+                    row.append($('<td></td>').text(item.adi));
+                    row.append($('<td></td>').text(item.soyadi));
+                    row.append($('<td></td>').text(item.cepTel));
+                    row.append($('<td></td>').text(item.isTel));
+                    row.append($('<td></td>').text(item.adres1));
+                    row.append($('<td></td>').text(item.adres2));
+                    tbody.append(row);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Veri çekilirken hata oluştu:", error);
+            }
+        });
+    });
+
+    $("#aramaInput").on("keydown", function(event){
+        if(event.key === "Enter"){
+            event.preventDefault();
+            var keyword = $("#aramaInput").val();
+            $.ajax({
+                url: '/HomeJQuery',
+                type: 'POST',
+                data: { keyword: keyword },
+                success: function (data) {
+                    $("#tblBody").html("");
+                    data.forEach(item => {
+                        var row = $('<tr></tr>');
+                        row.append($('<td></td>').text(item.adi));
+                        row.append($('<td></td>').text(item.soyadi));
+                        row.append($('<td></td>').text(item.cepTel));
+                        row.append($('<td></td>').text(item.isTel));
+                        row.append($('<td></td>').text(item.adres1));
+                        row.append($('<td></td>').text(item.adres2));
+                        $("#tblBody").append(row);
+                    });
+                },
+            })
+        }
+    })
+</script>

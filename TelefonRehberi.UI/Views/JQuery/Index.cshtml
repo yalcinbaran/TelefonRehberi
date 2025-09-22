@@ -1,0 +1,116 @@
+﻿<div class="d-flex flex-row justify-content-between mb-3">
+    <h2>jQuery Ajax - Tablo Getirme</h2>
+    <div id="Buttons" class="d-flex flex-row">
+        <button id="temizle" class="btn btn-secondary">Temizle</button>
+        <button id="jquery" class="btn btn-secondary mx-2" paging="9">JQuery ile getir</button>
+        <button id="controller" class="btn btn-info">Controller ile getir</button>
+    </div>
+</div>
+
+<table id="tbl" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Adı Soyadı</th>
+            <th>Görevi</th>
+            <th>Şehir</th>
+            <th>İşe Giriş Tarihi</th>
+        </tr>
+    </thead>
+    <tbody id="tblbody">
+    </tbody>
+</table>
+
+<script>
+    // const btnTemizle =document.getElementById("temizle");
+    const btnJquery = $("#jquery")[0];
+    const btnController = $("#controller")[0] // document.getElementById("controller");
+    const tblbody = $("#tblbody")[0]  //document.getElementById("tblbody");
+
+    function temizlefnc() {
+    $("#tblbody").html("");
+    CSSDuzenle("temizle");
+    }
+
+    $("#temizle").on("click",  temizlefnc);
+
+
+
+    $("#jquery").on("click", getDataHTML);
+
+    function getDataHTML(){
+             $.ajax({
+            url: '/html/table.html',
+            type: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                $("#tblbody").html(data);
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        })
+        CSSDuzenle("jquery");
+    }
+
+
+    $("#controller").on("click",getDataFromController);
+
+    function getDataFromController(){
+        $.ajax({
+            url: "/JQuery/HtmlTableGetir",
+            type: "GET",
+            dataType: "html",
+            success: function (data) {
+                $("#tblbody").html(data);
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    CSSDuzenle("controller");
+    }
+
+    function CSSDuzenle(id) {
+        $("#Buttons button")
+            .removeClass("btn-success")
+            .removeClass("btn-info")
+            .addClass("btn-secondary")
+            .filter("#" + id)
+            .removeClass("btn-secondary")
+            .addClass("btn-success");
+    }
+
+    // btnJquery.onclick = function () {
+    //         $.get('/table.html', function (data) {
+    //             tblbody.innerHTML = data;
+    //         });
+    // };
+    // btnJquery.onclick = function () {
+    //     $.ajax({
+    //         url: '/html/table.html',
+    //         type: 'GET',
+    //         dataType: 'html',
+    //         success: function (data) {
+    //             tblbody.innerHTML = data;
+    //         },
+    //         error: function (err) {
+    //             console.log(err.responseText);
+    //         }
+    //     })
+    // }
+
+    // btnController.onclick = function () {
+    //     $.ajax({
+    //         url: "/JQuery/HtmlTableGetir",
+    //         type: "GET",
+    //         dataType: "html",
+    //         success: function (data) {
+    //             tblbody.innerHTML = data;
+    //         },
+    //         error: function (err) {
+    //             console.log(err.responseText);
+    //         }
+    //     });
+    // };
+</script>
