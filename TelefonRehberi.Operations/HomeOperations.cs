@@ -34,5 +34,13 @@ namespace TelefonRehberi.Operations
             var filteredKisiler = conn.Query<Kisi>(query, new { keyword = keyword ?? string.Empty });
             return filteredKisiler;
         }
+        public IEnumerable<Kisi> GetAllDataTableBySearchKeyword(string? keyword)
+        {
+            string query = "SELECT * FROM Kisiler WHERE (ISNULL(Adi, '') + ISNULL(Soyadi, '') + ISNULL(CepTel, '') +  ISNULL(IsTel, '') + ISNULL(Adres1, '') + ISNULL(Adres2, '')) LIKE '%' + @keyword + '%'";
+            //string query = "SELECT * FROM Kisiler WHERE (Adi+Soyadi+CepTel+IsTel+Adres1+Adres2) Like @keyword";
+
+            var filteredKisiler = conn.Query<Kisi>(query, new { keyword = keyword ?? string.Empty });
+            return filteredKisiler;
+        }
     }
 }
