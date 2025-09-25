@@ -1,5 +1,7 @@
 ﻿using DokuzSistemBase.Data.Dorm;
 using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
 using TelefonRehberi.Operations.Models;
 
 namespace TelefonRehberi.Operations
@@ -36,24 +38,21 @@ namespace TelefonRehberi.Operations
         }
         public DataTable GetAllDataTableBySearchKeyword(string? keyword)
         {
-            string query = "SELECT * FROM Kisiler WHERE (ISNULL(Adi, '') + ISNULL(Soyadi, '') + ISNULL(CepTel, '') +  ISNULL(IsTel, '') + ISNULL(Adres1, '') + ISNULL(Adres2, '')) LIKE '%' + @keyword + '%'";
-            //string query = "SELECT * FROM Kisiler WHERE (Adi+Soyadi+CepTel+IsTel+Adres1+Adres2) Like @keyword";
+            string query = @"
+        SELECT Adi, Soyadi, CepTel, IsTel, Adres1, Adres2 FROM Kisiler 
+        WHERE 
+            (ISNULL(Adi, '') LIKE @keyword OR 
+             ISNULL(Soyadi, '') LIKE @keyword OR 
+             ISNULL(CepTel, '') LIKE @keyword OR 
+             ISNULL(IsTel, '') LIKE @keyword OR 
+             ISNULL(Adres1, '') LIKE @keyword OR 
+             ISNULL(Adres2, '') LIKE @keyword)";
 
-            var filteredKisiler = conn.Query<Kisi>(query, new { keyword = keyword ?? string.Empty });
+            using SqlDataAdapter dataAdapter = new(query, (SqlConnection)conn);
+            dataAdapter.SelectCommand.Parameters.AddWithValue("@keyword", $"%{keyword ?? ""}%");
+
             DataTable dt = new();
-            DataSet filtreliler = new();
-            filtreliler.Tables.Add(dt);
-            filtreliler.Tables[0].Columns.Add("Id", typeof(int));
-            filtreliler.Tables[0].Columns.Add("Adi", typeof(string));
-            filtreliler.Tables[0].Columns.Add("Soyadi", typeof(string));
-            filtreliler.Tables[0].Columns.Add("CepTel", typeof(string));
-            filtreliler.Tables[0].Columns.Add("IsTel", typeof(string));
-            filtreliler.Tables[0].Columns.Add("Adres1", typeof(string));
-            filtreliler.Tables[0].Columns.Add("Adres2", typeof(string));
-            foreach (var item in filteredKisiler)
-            {
-                filtreliler.Tables[0].Rows.Add(item.Id, item.Adi, item.Soyadi, item.CepTel, item.IsTel, item.Adres1, item.Adres2);
-            }
+            dataAdapter.Fill(dt);
             return dt;
         }
     }

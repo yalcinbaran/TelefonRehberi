@@ -66,7 +66,7 @@
     //                 $("#tbody").html(data);
     //                 $('#tblKisiler').DataTable();
     //             },
-                
+
     //             error: function (err) {
     //                 console.log(err.responseText);
     //             }
@@ -78,36 +78,50 @@
     $("#btnDataTable").on("click", function () {
         var keyword = $("#aramaInput").val();
 
-        $.ajax({
-            url: '/Home/GetAllWithDataTable',
-            type: 'GET',
-            data: { keyword: keyword },
-            success: function (data) {
-                if ($.fn.DataTable.isDataTable("#tblKisiler")) {
-                    $('#tblKisiler').DataTable().clear().destroy();
+         $.ajax({
+                url: `/Home/GetAllWithDataTable`,
+                type: 'GET',
+                dataType: 'json',
+                data: { keyword: keyword },
+                
+                success: function (data) {
+                    var table = $("#tblKisiler");
+                    var thead = table.find("thead");
+                    var tbody = table.find("tbody");
+
+                    thead.empty();
+                    tbody.empty();
+
+                    if (data.length === 0) {
+                        thead.append("<tr><th>Sonuç bulunamadı</th></tr>");
+                        return;
+                    }
+
+                    // Başlık satırı
+                    var headers = Object.keys(data[0]);
+                    var headerRow = "<tr>";
+                    headers.forEach(function (key) {
+                        headerRow += "<th>" + key + "</th>";
+                    });
+                    headerRow += "</tr>";
+                    thead.append(headerRow);
+
+                    // Veri satırları
+                    data.forEach(function (item) {
+                        var row = "<tr>";
+                        headers.forEach(function (key) {
+                            row += "<td>" + (item[key] ?? "") + "</td>";
+                        });
+                        row += "</tr>";
+                        tbody.append(row);
+                    });
+                },
+                error: function () {
+                    alert("Hata oluştu. Lütfen tekrar deneyin.");
                 }
+            });
 
-                var tbody = $("#tblKisiler tbody");
-                tbody.html("");
 
-                data.forEach(item=>{
-                        var row = "<tr>" +
-                        "<td>" + item.adi + "</td>" +
-                        "<td>" + item.soyadi + "</td>" +
-                        "<td>" + item.cepTel + "</td>" +
-                        "<td>" + item.isTel + "</td>" +
-                        "<td>" + item.adres1 + "</td>" +
-                        "<td>" + item.adres2 + "</td>" +
-                        "</tr>";
-                    tbody.append(row);
-
-                })
-                $('#tblKisiler').DataTable();
-            },
-            error: function (err) {
-                console.log(err.responseText);
-            }
-        });
     });
 
 
