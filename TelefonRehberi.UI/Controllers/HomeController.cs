@@ -31,6 +31,13 @@ namespace TelefonRehberi.UI.Controllers
             return new JsonResult(filteredKisiler);
         }
 
+        [HttpGet]
+        public IActionResult GetAllWithDataTable(string? keyword = null)
+        {
+            var filteredKisiler = _homeOperations.GetAllDataTableBySearchKeyword(keyword);
+            return new JsonResult(filteredKisiler);
+        }
+
         public IActionResult Privacy()
         {
             return View();

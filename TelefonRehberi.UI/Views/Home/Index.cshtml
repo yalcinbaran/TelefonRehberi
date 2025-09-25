@@ -17,14 +17,13 @@
             <div style="display: flex; align-items: center; width: 250px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
                 <form id="aramaForm" method="post" action="/Home/Index" style="display: flex; align-items: center; width: 300px; border: 1px solid #ccc; border-radius: 4px; padding: 4px;">
                     <input type="search" name="keyword" id="aramaInput" value="@ViewBag.AramaKelimesi" placeholder="Ara..." style="flex: 1; border: none; outline: none;" />
-                    <span id="aramaBtn" style="margin-left: 8px; cursor: pointer;">🔍</span>
                 </form>
-
+                <a id="btnDataTable" class="btn btn-primary" style="margin-left: 10px;">DataTable</a>
 
 
             </div>
         </div>
-        <table style="width: 100%">
+        <table style="width: 100%" id="tblKisiler" class="display">
             <thead>
                 <tr>
                     <th>Adı</th>
@@ -54,39 +53,63 @@
 
 
 <script>
-    $("#aramaInput").on("keydown", function(event){
-        if(event.key === "Enter"){
-            event.preventDefault();
-            const keyword = $("#aramaInput").val();
-            $.ajax({
-                url: '/Home/Index',
-                type: 'POST',
-                data: { keyword: keyword },
-                success: function (data) {
-                    $("#tbody").html("");
-                    $("#tbody").html(data);
-                },
-                error: function (err) {
-                    console.log(err.responseText);
-                }
-            });
-        }
-    })
+    // $("#aramaInput").on("keydown", function(event){
+    //     if(event.key === "Enter"){
+    //         event.preventDefault();
+    //         const keyword = $("#aramaInput").val();
+    //         $.ajax({
+    //             url: '/Home/Index',
+    //             type: 'POST',
+    //             data: { keyword: keyword },
+    //             success: function (data) {
+    //                 $("#tbody").html("");
+    //                 $("#tbody").html(data);
+    //                 $('#tblKisiler').DataTable();
+    //             },
+                
+    //             error: function (err) {
+    //                 console.log(err.responseText);
+    //             }
+    //         });
+    //     }
+    // })
 
-    $("#aramaBtn").on("click", function () {
-    const keyword = $("#aramaInput").val();
-      $.ajax({
-        url: '/Home/Index',
-        type: 'POST',
-        data: { keyword: keyword },
-        success: function (data) {
-          $("#tbody").html("");
-            $("#tbody").html(data);
-        },
-        error: function (err) {
-          console.log(err.responseText);
-        }
-      });
-    })
+
+    $("#btnDataTable").on("click", function () {
+        var keyword = $("#aramaInput").val();
+
+        $.ajax({
+            url: '/Home/GetAllWithDataTable',
+            type: 'GET',
+            data: { keyword: keyword },
+            success: function (data) {
+                if ($.fn.DataTable.isDataTable("#tblKisiler")) {
+                    $('#tblKisiler').DataTable().clear().destroy();
+                }
+
+                var tbody = $("#tblKisiler tbody");
+                tbody.html("");
+
+                data.forEach(item=>{
+                        var row = "<tr>" +
+                        "<td>" + item.adi + "</td>" +
+                        "<td>" + item.soyadi + "</td>" +
+                        "<td>" + item.cepTel + "</td>" +
+                        "<td>" + item.isTel + "</td>" +
+                        "<td>" + item.adres1 + "</td>" +
+                        "<td>" + item.adres2 + "</td>" +
+                        "</tr>";
+                    tbody.append(row);
+
+                })
+                $('#tblKisiler').DataTable();
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    });
+
+
 
 </script>
