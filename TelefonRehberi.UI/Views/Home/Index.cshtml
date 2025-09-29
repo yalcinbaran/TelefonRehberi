@@ -50,79 +50,163 @@
         </table>
     }
 </div>
-
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999">
+    <div id="myToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                Tablo başarıyla güncellendi.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
 
 <script>
-    // $("#aramaInput").on("keydown", function(event){
-    //     if(event.key === "Enter"){
-    //         event.preventDefault();
-    //         const keyword = $("#aramaInput").val();
-    //         $.ajax({
-    //             url: '/Home/Index',
-    //             type: 'POST',
-    //             data: { keyword: keyword },
-    //             success: function (data) {
-    //                 $("#tbody").html("");
-    //                 $("#tbody").html(data);
-    //                 $('#tblKisiler').DataTable();
-    //             },
-
-    //             error: function (err) {
-    //                 console.log(err.responseText);
-    //             }
-    //         });
-    //     }
-    // })
-
-
-    $("#btnDataTable").on("click", function () {
+    function tabloyuYukle() {
         var keyword = $("#aramaInput").val();
 
-         $.ajax({
-                url: `/Home/GetAllWithDataTable`,
-                type: 'GET',
-                dataType: 'json',
-                data: { keyword: keyword },
-                
-                success: function (data) {
-                    var table = $("#tblKisiler");
-                    var thead = table.find("thead");
-                    var tbody = table.find("tbody");
+        return $.ajax({
+            url: `/Home/GetAllWithDataTable`,
+            type: 'GET',
+            dataType: 'json',
+            data: { keyword: keyword }
+        });
+    }
 
-                    thead.empty();
-                    tbody.empty();
+    $("#btnDataTable").on("click", async function () {
+        try {
+            const data = await tabloyuYukle();
 
-                    if (data.length === 0) {
-                        thead.append("<tr><th>Sonuç bulunamadı</th></tr>");
-                        return;
-                    }
+            var table = $("#tblKisiler");
+            var thead = table.find("thead");
+            var tbody = table.find("tbody");
 
-                    // Başlık satırı
-                    var headers = Object.keys(data[0]);
-                    var headerRow = "<tr>";
+            thead.empty();
+            tbody.empty();
+
+            if (data.length === 0) {
+                thead.append("<tr><th>Sonuç bulunamadı</th></tr>");
+            } else {
+                var headers = Object.keys(data[0]);
+                var headerRow = "<tr>" + headers.map(h => `<th>${h}</th>`).join("") + "</tr>";
+                thead.append(headerRow);
+
+                data.forEach(function (item) {
+                    var row = "<tr>";
                     headers.forEach(function (key) {
-                        headerRow += "<th>" + key + "</th>";
+                        row += "<td>" + (item[key] ?? "") + "</td>";
                     });
-                    headerRow += "</tr>";
-                    thead.append(headerRow);
+                    row += "</tr>";
+                    tbody.append(row);
+                });
+            }
 
-                    // Veri satırları
-                    data.forEach(function (item) {
-                        var row = "<tr>";
-                        headers.forEach(function (key) {
-                            row += "<td>" + (item[key] ?? "") + "</td>";
-                        });
-                        row += "</tr>";
-                        tbody.append(row);
-                    });
-                },
-                error: function () {
-                    alert("Hata oluştu. Lütfen tekrar deneyin.");
-                }
-            });
+            // ✅ Başarı mesajı
+            $("#myToast .toast-body").text("Tablo başarıyla güncellendi. " + data.length + " kayıt yüklendi.");
+            $("#myToast").removeClass("bg-danger").addClass("bg-success");
 
+        } catch (err) {
+            // ❌ Hata varsa
+            $("#myToast .toast-body").text("İşlem sırasında hata oluştu: " + err);
+            $("#myToast").removeClass("bg-success").addClass("bg-danger");
+        }
 
+        // 🟡 Toast göster
+        const toast = new bootstrap.Toast($("#myToast"));
+        toast.show();
     });
+
+
+
+
+
+    $("#aramaInput").on("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            $("#btnDataTable").trigger("click"); // ✅ async fonksiyonu tetikle
+        }
+    });
+
+
+    // function tabloyuYukle(callback) {
+    //     var keyword = $("#aramaInput").val();
+
+    //     $.ajax({
+    //         url: `/Home/GetAllWithDataTable`,
+    //         type: 'GET',
+    //         dataType: 'json',
+    //         data: { keyword: keyword },
+
+    //         success: function (data) {
+    //             var table = $("#tblKisiler");
+    //             var thead = table.find("thead");
+    //             var tbody = table.find("tbody");
+
+    //             thead.empty();
+    //             tbody.empty();
+
+    //             if (data.length === 0) {
+    //                 thead.append("<tr><th>Sonuç bulunamadı</th></tr>");
+
+    //                 // Boş sonuç bile olsa callback çağır
+    //                 if (typeof callback === "function") {
+    //                     callback("Boş sonuç");
+    //                 }
+
+    //                 return;
+    //             }
+
+    //             // Başlık satırı
+    //             var headers = Object.keys(data[0]);
+    //             var headerRow = "<tr>";
+    //             headers.forEach(function (key) {
+    //                 headerRow += "<th>" + key + "</th>";
+    //             });
+    //             headerRow += "</tr>";
+    //             thead.append(headerRow);
+
+    //             // Veri satırları
+    //             data.forEach(function (item) {
+    //                 var row = "<tr>";
+    //                 headers.forEach(function (key) {
+    //                     row += "<td>" + (item[key] ?? "") + "</td>";
+    //                 });
+    //                 row += "</tr>";
+    //                 tbody.append(row);
+    //             });
+
+    //             // ✅ Callback başarılı işlemin sonunda çağırılıyor
+    //             if (typeof callback === "function") {
+    //                 callback(null, data); // hata yoksa ilk parametre null verilir
+    //             }
+    //         },
+
+    //         error: function (xhr, status, error) {
+    //             if (typeof callback === "function") {
+    //                 callback(error); // hata varsa hata mesajı gönder
+    //             } else {
+    //                 alert("Hata oluştu. Lütfen tekrar deneyin.");
+    //             }
+    //         }
+    //     });
+    // }
+
+    // $("#btnDataTable").on("click", function () {
+    //     tabloyuYukle(function (err, data) {
+    //         if (err) {
+    //             // Hata toast gösterimi
+    //             $("#myToast .toast-body").text("İşlem sırasında hata oluştu: " + err);
+    //             $("#myToast").removeClass("bg-success").addClass("bg-danger");
+    //         } else {
+    //             $("#myToast .toast-body").text("Tablo başarıyla güncellendi. " + data.length + " kayıt yüklendi.");
+    //             $("#myToast").removeClass("bg-danger").addClass("bg-success");
+    //         }
+
+    //         // Toast'ı göster
+    //         const toast = new bootstrap.Toast($("#myToast"));
+    //         toast.show();
+    //     });
+    // });
 
 
 

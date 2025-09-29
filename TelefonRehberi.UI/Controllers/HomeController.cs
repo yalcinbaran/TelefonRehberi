@@ -36,7 +36,7 @@ namespace TelefonRehberi.UI.Controllers
         public IActionResult GetAllWithDataTable(string? keyword = null)
         {
             var dt = _homeOperations.GetAllDataTableBySearchKeyword(keyword);
-
+            
             var list = new List<Dictionary<string, object>>();
 
             foreach (DataRow row in dt.Rows)
